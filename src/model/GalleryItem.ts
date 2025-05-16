@@ -4,10 +4,8 @@ import mongoose ,{Schema,Document} from "mongoose";
 
 export interface GalleryItem extends Document{
   title :string;
-  description :string;
-  imageUrl :string;
-  category :string;
-  featured :boolean;
+ imageUrl :string;
+  caption :string;
   createdAt :Date;
 }
 
@@ -17,16 +15,12 @@ const GalleryItemSchema: Schema<GalleryItem> = new Schema({
     required: [true, 'Please provide an image title'],
     trim: true,
   },
-  description: String,
+  caption: String,
   imageUrl: {
     type: String,
     required: [true, 'Please provide an image URL'],
   },
-  category: String,
-  featured: {
-    type: Boolean,
-    default: false,
-  },
+
   createdAt: {
     type: Date,
     default: Date.now,

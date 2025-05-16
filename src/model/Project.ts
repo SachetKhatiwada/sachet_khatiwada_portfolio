@@ -32,22 +32,16 @@ const ProjectSchema: Schema<Project> = new Schema({
     type: String,
     required: [true, 'Please provide a project description'],
   },
-  content: {
-    type: String,
-    required: [true, 'Please provide project content'],
-  },
+
   technologies: [String],
   image: {
     type: String,
     required: [true, 'Please provide a project image'],
   },
-  gallery: [String], // Additional project images
+
   demoUrl: String,
   githubUrl: String,
-  featured: {
-    type: Boolean,
-    default: false,
-  },
+
   createdAt: {
     type: Date,
     default: Date.now,

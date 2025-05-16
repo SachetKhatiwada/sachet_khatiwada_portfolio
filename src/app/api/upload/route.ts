@@ -7,10 +7,9 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 export async function POST(request: Request) {
   const session = await getServerSession(authOptions);
   
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-  //  || session.user.role !== 'admin'
+  // if (!session || session.user.role !== 'admin') {
+  //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  // }
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
@@ -27,7 +26,7 @@ export async function POST(request: Request) {
     
     switch (type) {
       case 'project':
-        uploadDir = path.join(process.cwd(), 'public/images/projects');
+        uploadDir = path.join(process.cwd(), 'public/images/project');
         break;
       case 'blog':
         uploadDir = path.join(process.cwd(), 'public/images/blog');
@@ -37,6 +36,7 @@ export async function POST(request: Request) {
     }
     
     const filePath = path.join(uploadDir, filename);
+    console.log('Saving file to:', filePath);
     
     await writeFile(filePath, buffer);
     

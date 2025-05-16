@@ -1,13 +1,19 @@
 // src/app/api/projects/[slug]/route.ts
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import ProjectModel from '@/model/Project';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
-import type { NextRequest } from 'next/server';
 
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
+interface Params {
+  params: {
+    slug: string;
+  };
+}
+
+// GET /api/projects/[slug]
+export async function GET(request: NextRequest, { params }: Params) {
   await dbConnect();
 
   try {
@@ -23,12 +29,13 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { slug: string } }) {
+// PUT /api/projects/[slug]
+export async function PUT(request: NextRequest, { params }: Params) {
   const session = await getServerSession(authOptions);
 
-  // if (!session || session.user.role !== 'admin') {
-  //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  // }
+  if (!session || session.user.role !== 'admin') {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 
   await dbConnect();
 
@@ -50,7 +57,8 @@ export async function PUT(request: NextRequest, { params }: { params: { slug: st
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { slug: string } }) {
+// DELETE /api/projects/[slug]
+export async function DELETE(request: NextRequest, { params }: Params) {
   const session = await getServerSession(authOptions);
 
   if (!session || session.user.role !== 'admin') {
