@@ -10,9 +10,9 @@ export async function GET(request: Request) {
   await dbConnect();
   const session = await getServerSession(authOptions);
 
-  // if (!session || session.user.role !== 'admin') {
-  //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  // }
+  if (!session || session.user.role !== 'admin') {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 
   try {
     const { searchParams } = new URL(request.url);

@@ -1,10 +1,10 @@
 import mongoose ,{Schema,Document} from "mongoose";
 
 export interface User extends Document{
-  username :string;
-  email :string;
-  password :string;
   role :string;
+  email :string;
+  username :string;
+  password :string;
 }
 const UserSchema: Schema<User> = new Schema({
   username: {
@@ -25,8 +25,8 @@ const UserSchema: Schema<User> = new Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'editor'],
-    default: 'admin',
+    enum: ['admin', 'user'],
+    default: 'user',
   },
 });
 

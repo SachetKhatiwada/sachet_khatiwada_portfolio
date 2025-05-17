@@ -12,9 +12,9 @@ export async function GET(
   await dbConnect();
   const session = await getServerSession(authOptions);
 
-  // if (!session || session.user.role !== 'admin') {
-  //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  // }
+  if (!session || session.user.role !== 'admin') {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 
   try {
     if (!Types.ObjectId.isValid(params.id)) {
@@ -43,9 +43,9 @@ export async function PATCH(
   await dbConnect();
   const session = await getServerSession(authOptions);
 
-  // if (!session || session.user.role !== 'admin') {
-  //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  // }
+  if (!session || session.user.role !== 'admin') {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 
   try {
     if (!Types.ObjectId.isValid(params.id)) {

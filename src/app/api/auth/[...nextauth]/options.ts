@@ -21,7 +21,9 @@ export const authOptions: NextAuthOptions = {
               { email: credentials.identifier },
               { username: credentials.identifier },
             ],
-        }, 'email username password');
+        }, 'email username password role');
+        console.log(user);
+
           if (!user) {
             throw new Error('No user found with this email');
           }
@@ -32,13 +34,13 @@ export const authOptions: NextAuthOptions = {
           );
           if (isPasswordCorrect) {
             return {
+              role:user.role,
               email: user.email,
               username: user.username,
             };
           }
-           else {
+          
             throw new Error('Incorrect password');
-          }
         } catch (err: any) {
           throw new Error(err);
         }
@@ -48,7 +50,8 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token._id = user._id?.toString(); // Convert ObjectId to string
+        token._id = user._id?.toString();
+        token.role = user.role;
         token.username = user.username;
       }
       return token;
@@ -56,6 +59,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token) {
         session.user._id = token._id;
+        session.user.role = token.role;
         session.user.username = token.username;
       }
       return session;

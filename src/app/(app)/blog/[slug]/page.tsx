@@ -38,8 +38,8 @@ async function getBlogPost(slug: string) {
 }
 
 export default async function BlogDetailPage({ params }: { params: { slug: string } }) {
-  // First await the params destructuring
-  const { slug } = params;
+  // First destructure the params object
+    const { slug } = await params;
   
   // Then fetch the data (with error boundary)
   let post: BlogPost | null;
