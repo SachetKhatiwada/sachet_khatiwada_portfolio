@@ -18,7 +18,7 @@ interface BlogPost {
 
 async function getBlogPost(slug: string) {
   try {
-    const res = await fetch(`http://localhost:3000/api/blog/${slug}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blog/${slug}`, {
       next: { 
         revalidate: 60,
         tags: [`blog-${slug}`] // Add cache tag for on-demand revalidation

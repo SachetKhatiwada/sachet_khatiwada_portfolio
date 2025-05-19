@@ -19,7 +19,7 @@ interface BlogPost {
 }
 
 async function getBlogPosts() {
-  const res = await fetch('http://localhost:3000/api/blog');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blog`);
   if (!res.ok) throw new Error('Failed to fetch blog posts');
   return res.json();
 }
